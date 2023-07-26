@@ -1,5 +1,4 @@
-# hcm
-Human Capital Management Application 
+# Human Capital Management Application 
 
 Web application code to expose API to create, update ,delete and read employee data in database. Using  technology java, Springboot, Postgre DB , JDBC template. step by step instruction to run the application .
 
