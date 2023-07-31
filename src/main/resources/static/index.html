@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Management</title>
+</head>
+<body>
+    <h1>Employee Management</h1>
+
+    <!-- Employee Form -->
+    <h2>Add Employee</h2>
+    <form id="employeeForm">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" required>
+        <br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" required>
+        <br>
+        <label for="position">Position:</label>
+        <input type="text" id="position" required>
+        <br>
+        <button type="submit">Add Employee</button>
+    </form>
+
+    <!-- Employee Table -->
+    <h2>Employee List</h2>
+    <table id="employeeTable" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Position</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="employeeData"></tbody>
+    </table>
+
+    <script>
+        const employeeForm = document.getElementById('employeeForm');
+        const employeeTable = document.getElementById('employeeTable');
+        const employeeData = document.getElementById('employeeData');
+
+        // Function to fetch and display all employees
+        function fetchEmployees() {
+            fetch('/api/employee/all')
+                .then(response => response.json())
+                .then(data => {
+                    employeeData.innerHTML = '';
+                    data.forEach(employee => {
+                        const row = `<tr>
+                            <td>${employee.id}</td>
+                            <td>${employee.first_name}</td>
+                            <td>${employee.last_name}</td>
+                            <td>${employee.position}</td>
+                            <td>
+                                <button onclick="deleteEmployee(${employee.id})">Delete</button>
+                            </td>
+                        </tr>`;
+                        employeeData.insertAdjacentHTML('beforeend', row);
+                    });
+                });
+        }
+
+        // Function to add an employee
+        function addEmployee(event) {
+            event.preventDefault();
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const position = document.getElementById('position').value;
+
+            fetch('/api/employees', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    first_name: firstName,
+                    last_name: lastName,
+                    position: position
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                fetchEmployees();
+                employeeForm.reset();
+            });
+        }
+
+        // Function to delete an employee
+        function deleteEmployee(id) {
+            fetch(`/api/employees/${id}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.status === 204) {
+                    fetchEmployees();
+                }
+            });
+        }
+
+        // Event listener to submit the employee form
+        employeeForm.addEventListener('submit', addEmployee);
+
+        // Fetch and display employees on page load
+        fetchEmployees();
+    </script>
+</body>
+</html>
