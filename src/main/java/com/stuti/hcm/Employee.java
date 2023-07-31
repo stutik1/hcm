@@ -4,6 +4,17 @@ public class Employee {
     private Long id ;
     private String first_name;
     private String last_name ;
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", position='" + position + '\'' +
+                '}';
+    }
+
     private String position ;
 
     public Employee() {

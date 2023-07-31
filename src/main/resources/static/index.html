@@ -69,7 +69,7 @@
             const lastName = document.getElementById('lastName').value;
             const position = document.getElementById('position').value;
 
-            fetch('/api/employees', {
+            fetch('/api/employee', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -89,7 +89,7 @@
 
         // Function to delete an employee
         function deleteEmployee(id) {
-            fetch(`/api/employees/${id}`, {
+            fetch(`/api/employee/${id}`, {
                 method: 'DELETE'
             })
             .then(response => {

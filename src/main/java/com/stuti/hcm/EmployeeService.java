@@ -27,12 +27,13 @@ public class EmployeeService {
     }
 
     public Employee updateEmployee(Long id , Employee updatedEmployee){
-        Employee employee = employeeRepository.findById(id);
-        if (employee != null){
-            employee.setFirst_name(updatedEmployee.getFirst_name());
-            employee.setLast_name(updatedEmployee.getLast_name());
-            employee.setPosition(updatedEmployee.getPosition());
-            employeeRepository.update(employee);
+        updatedEmployee.setId(id);
+        Employee employee = new Employee();
+        if (updatedEmployee != null){
+            //employee.setFirst_name(updatedEmployee.getFirst_name());
+            //employee.setLast_name(updatedEmployee.getLast_name());
+            //employee.setPosition(updatedEmployee.getPosition());
+            employeeRepository.update(updatedEmployee);
         }
         return employee;
     }
