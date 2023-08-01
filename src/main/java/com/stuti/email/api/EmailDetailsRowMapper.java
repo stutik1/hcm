@@ -4,15 +4,15 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EmailRowMapper implements RowMapper {
-    public EmailDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
-        EmailDetails emailDetails = new EmailDetails();
-        EmailDetails.setId(rs.getLong("email_status_id"));
-        EmailDetails.setSenderEmailId(rs.getString("sender_email"));
-        EmailDetails.setRecipientMailId(rs.getString("recipient_mail"));
-        EmailDetails.getBody(rs.getString("body"));
-        EmailDetails.setSubject(rs.getString("subject"));
-        EmailDetails.setStatus(rs.getString("status"));
-        return EmailDetails;
-    }
+public class EmailDetailsRowMapper implements RowMapper {
+        public EmailDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
+            EmailDetails emailDetails = new EmailDetails();
+            emailDetails.setId(rs.getLong("email_status_id"));
+            emailDetails.setBody(rs.getString("body"));
+            emailDetails.setSenderEmailId(rs.getString("sender_email"));
+            emailDetails.setRecipientMailId(rs.getString("recipient_mail"));
+            emailDetails.setSubject(rs.getString("subject"));
+            emailDetails.setStatus(EmailStatusType.valueOf(rs.getString("status").toUpperCase()));
+            return emailDetails;
+        }
 }
