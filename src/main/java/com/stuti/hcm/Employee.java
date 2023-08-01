@@ -1,9 +1,10 @@
 package com.stuti.hcm;
 
 public class Employee {
-    private Long id ;
+    private Long id;
     private String first_name;
-    private String last_name ;
+    private String last_name;
+    private String position;
 
     @Override
     public String toString() {
@@ -14,8 +15,6 @@ public class Employee {
                 ", position='" + position + '\'' +
                 '}';
     }
-
-    private String position ;
 
     public Employee() {
         this.id = id;
