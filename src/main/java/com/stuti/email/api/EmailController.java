@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -18,6 +19,15 @@ public class EmailController {
 
     @PostMapping
     public EmailDetails createEmailDetails(@RequestBody EmailDetails emailDetails) {
+        emailService.sendEmail(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody());
+
+        File attachmentFile = new File("/Users/megha/Desktop/megha.txt");
+
+        emailService.sendMessageWithAttachment(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody(), String.valueOf(attachmentFile));
+
+        String html = "<h3>Hello World!</h3>";
+        emailService.sendMessageWithHTML(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody(), html);
+
         return emailService.saveEmail(emailDetails);
     }
 
@@ -32,7 +42,7 @@ public class EmailController {
     }
 
     @GetMapping("/all")
-    public List<EmailDetails> getAllEmailDetails(){
+    public List<EmailDetails> getAllEmailDetails() {
         return emailService.getAllEmail();
     }
 }
