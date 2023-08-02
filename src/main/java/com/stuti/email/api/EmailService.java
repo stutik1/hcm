@@ -39,14 +39,14 @@ public class EmailService {
         }
     }
 
-    public void sendMessageWithAttachment(String to, String subject, String text, String pathToAttachment) {
+    public void sendMessageWithAttachmentAndHTML(String to, String subject, String text, String pathToAttachment , String html) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setFrom("stuti.megha2@gmail.com");
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setText(text);
+            helper.setText(html,true);
 
             FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
             helper.addAttachment("Invoice", file);
@@ -57,21 +57,21 @@ public class EmailService {
         }
     }
 
-    public void sendMessageWithHTML(String to, String subject, String text, String html) {
-        try {
-            MimeMessage message = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-            helper.setFrom("stuti.megha2@gmail.com");
-            helper.setText(html, true);
-            helper.setTo(to);
-            helper.setSubject(subject);
-
-            javaMailSender.send(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public void sendMessageWithHTML(String to, String subject, String text, String html) {
+//        try {
+//            MimeMessage message = javaMailSender.createMimeMessage();
+//            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+//
+//            helper.setFrom("stuti.megha2@gmail.com");
+//            helper.setText(html, true);
+//            helper.setTo(to);
+//            helper.setSubject(subject);
+//
+//            javaMailSender.send(message);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public EmailDetails saveEmail(EmailDetails emailDetails) {
         return emailRepository.save(emailDetails);

@@ -19,14 +19,14 @@ public class EmailController {
 
     @PostMapping
     public EmailDetails createEmailDetails(@RequestBody EmailDetails emailDetails) {
-        emailService.sendEmail(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody());
+       // emailService.sendEmail(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody());
 
         File attachmentFile = new File("/Users/megha/Desktop/megha.txt");
-
-        emailService.sendMessageWithAttachment(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody(), String.valueOf(attachmentFile));
-
         String html = "<h3>Hello World!</h3>";
-        emailService.sendMessageWithHTML(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody(), html);
+        emailService.sendMessageWithAttachmentAndHTML(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody(), String.valueOf(attachmentFile),html);
+
+//        String html = "<h3>Hello World!</h3>";
+//        emailService.sendMessageWithHTML(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody(), html);
 
         return emailService.saveEmail(emailDetails);
     }
