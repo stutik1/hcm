@@ -1,6 +1,7 @@
 package com.stuti.email.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,18 +18,35 @@ public class EmailController {
         this.emailService = emailService;
     }
 
-    @PostMapping
-    public EmailDetails createEmailDetails(@RequestBody EmailDetails emailDetails) {
-       // emailService.sendEmail(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody());
+//    @PostMapping
+//    public EmailDetails createEmailDetails(@RequestBody EmailDetails emailDetails) {
+//        //// emailService.sendEmail(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody());
+//
+//        File attachmentFile = new File("/Users/megha/Desktop/megha.txt");
+//        String html = "<h3>Hello World!</h3>";
+//        emailService.sendMessageWithAttachmentAndHTML(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody(), String.valueOf(attachmentFile), html);
+//
+//        /////
+////        String html = "<h3>Hello World!</h3>";
+////        emailService.sendMessageWithHTML(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody(), html);
+//
+//        return emailService.saveEmail(emailDetails);
+//    }
 
+    @PostMapping()
+    public ResponseEntity<String> createEmail(@RequestBody EmailDetails emailDetails) {
         File attachmentFile = new File("/Users/megha/Desktop/megha.txt");
         String html = "<h3>Hello World!</h3>";
-        emailService.sendMessageWithAttachmentAndHTML(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody(), String.valueOf(attachmentFile),html);
+        emailService.sendMessageWithAttachmentAndHTML(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody(), String.valueOf(attachmentFile), html);
 
-//        String html = "<h3>Hello World!</h3>";
-//        emailService.sendMessageWithHTML(emailDetails.getRecipientMailId(), emailDetails.getSubject(), emailDetails.getBody(), html);
+        emailDetails.getSenderEmailId();
+        emailDetails.setRecipientMailId(emailDetails.getRecipientMailId());
+        emailDetails.setBody(emailDetails.getBody());
+        emailDetails.setSubject(emailDetails.getSubject());
+        emailDetails.setStatus(EmailStatusType.valueOf("PENDING"));
+        emailService.saveEmail(emailDetails);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Email sent successfully.");
 
-        return emailService.saveEmail(emailDetails);
     }
 
     @GetMapping("{id}")
