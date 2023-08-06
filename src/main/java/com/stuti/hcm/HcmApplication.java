@@ -13,18 +13,20 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.stuti.*"})
 public class HcmApplication implements WebMvcConfigurer {
+	@Autowired
+	private CustomInterceptor customInterceptor;
 
 	public static void main(String[] args) {
 		SpringApplication.run(HcmApplication.class, args);
 	}
 
-	@Bean
-	public CustomInterceptor customInterceptor() {
-		return new CustomInterceptor();
-	}
+//	@Bean
+//	public CustomInterceptor customInterceptor() {
+//		return new CustomInterceptor();
+//	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(customInterceptor());
+		registry.addInterceptor(customInterceptor);
 	}
 }

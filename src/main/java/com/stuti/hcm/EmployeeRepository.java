@@ -92,8 +92,10 @@ public class EmployeeRepository {
     }
 
     public boolean delete(Long id) {
-        String sql = "DELETE FROM employee WHERE id = ?";
-        int r =0;//jdbcTemplate.update(sql, id);
+        String sql = "DELETE FROM employee WHERE id = :id";
+        MapSqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", id);
+
+        int r =jdbcTemplate.update(sql, namedParameters);
         if (r == 1) {
             return true;
         }

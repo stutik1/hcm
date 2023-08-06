@@ -11,8 +11,13 @@ public class ApiDetails {
     public ApiDetails() {
     }
 
-    public ApiDetails(int id, String clientName, String ipAddress, Timestamp apiCallTime) {
+    public ApiDetails(int id , String clientName, String ipAddress, Timestamp apiCallTime) {
         this.apiId = id;
+        this.clientName = clientName;
+        this.ipAddress = ipAddress;
+        this.apiCallTime = apiCallTime;
+    }
+    public ApiDetails( String clientName, String ipAddress, Timestamp apiCallTime) {
         this.clientName = clientName;
         this.ipAddress = ipAddress;
         this.apiCallTime = apiCallTime;

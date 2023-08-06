@@ -21,13 +21,12 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public Employee createEmployee(@RequestBody Employee employee, @RequestHeader("Authorization") String apiMetricInsertSql) {
+    public Employee createEmployee(@RequestBody Employee employee) {
         return employeeService.saveEmployee(employee);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
-    //public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id, @RequestHeader("Client-Name") String clientName) {
         String clientName="test";
         Employee employee = employeeService.getEmployeeById(id);
         ApiDetails apiDetails=new ApiDetails(0,clientName,"10.10.10.10",new Timestamp(System.currentTimeMillis()));
@@ -47,7 +46,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee, @RequestHeader("Authorization") String apiMetricInsertSql) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Long id, @RequestBody Employee updatedEmployee) {
         Employee employee = employeeService.updateEmployee(id, updatedEmployee);
         if (employee != null) {
             return ResponseEntity.ok(employee);
@@ -57,7 +56,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable Long id, @RequestHeader("Authorization") String apiMetricInsertSql) {
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
         boolean deleted = employeeService.deleteEmployee(id);
         if (deleted) {
             return ResponseEntity.ok("Successfully Deleted: " + id);
